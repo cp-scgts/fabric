@@ -6,7 +6,7 @@
 version: '2'
 
 volumes:
-  orderer.example.com:
+  orderer.mymsp.com:
   peer0.scgts.com:
   peer1.scgts.com:
   peer0.org2.example.com:
@@ -49,11 +49,11 @@ services:
     networks:
       - scgtsnetwork 
 
-  orderer.example.com:
+  orderer.mymsp.com:
     extends:
       file:   base/docker-compose-base.yaml
-      service: orderer.example.com
-    container_name: orderer.example.com
+      service: orderer.mymsp.com
+    container_name: orderer.mymsp.com
     networks:
       - scgtsnetwork 
 

@@ -174,7 +174,7 @@ function networkUp () {
 # Stop the orderer and peers, backup the ledger from orderer and peers, cleanup chaincode containers and images
 # and relaunch the orderer and peers with latest tag
 function upgradeNetwork () {
-  docker inspect  -f '{{.Config.Volumes}}' orderer.example.com |grep -q '/var/hyperledger/production/orderer'
+  docker inspect  -f '{{.Config.Volumes}}' orderer.mymsp.com |grep -q '/var/hyperledger/production/orderer'
   if [ $? -ne 0 ]; then
     echo "ERROR !!!! This network does not appear to be using volumes for its ledgers, did you start from fabric-samples >= v1.0.6?"
     exit 1
@@ -197,9 +197,9 @@ function upgradeNetwork () {
   docker-compose $COMPOSE_FILES up -d --no-deps cli
 
   echo "Upgrading orderer"
-  docker-compose $COMPOSE_FILES stop orderer.example.com
-  docker cp -a orderer.example.com:/var/hyperledger/production/orderer $LEDGERS_BACKUP/orderer.example.com
-  docker-compose $COMPOSE_FILES up -d --no-deps orderer.example.com
+  docker-compose $COMPOSE_FILES stop orderer.mymsp.com
+  docker cp -a orderer.mymsp.com:/var/hyperledger/production/orderer $LEDGERS_BACKUP/orderer.mymsp.com
+  docker-compose $COMPOSE_FILES up -d --no-deps orderer.mymsp.com
 
   for PEER in peer0.scgts.com peer1.scgts.com peer0.org2.example.com peer1.org2.example.com; do
     echo "Upgrading peer $PEER"
